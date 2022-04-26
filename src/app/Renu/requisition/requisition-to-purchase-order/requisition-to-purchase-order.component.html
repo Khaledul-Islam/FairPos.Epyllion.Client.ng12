@@ -1,0 +1,263 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Requisition to Purchase Order</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Requisition to PO</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Requisition to Purchase Order</h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">*Requisition</label>
+                    <div class="col-md-6">
+                      <ng-select
+                        [items]="RequisitionList"
+                        placeholder="Select"
+                        bindLabel="Chln"
+                        bindValue="Chln"
+                        [disabled]="ReqTempLst.length !== 0"
+                        [(ngModel)]="reqName"
+                      >
+                      </ng-select>
+                    </div>
+                    <div class="col-md-2" *ngIf="ReqTempLst.length === 0">
+                      <button class="btn btn-md float-right hidden-md-down btn-success" (click)="LoadButtonClick()">
+                        <i class="mdi mdi-sync"></i> Load
+                      </button>
+                    </div>
+                    <div class="col-md-2" *ngIf="ReqTempLst.length !== 0">
+                      <button class="btn btn-md float-right hidden-md-down btn-success" (click)="ClearButtonClick()">
+                        <i class="mdi mdi-delete"></i> Clear
+                      </button>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">*Supplier</label>
+                    <div class="col-md-9">
+                      <ng-select
+                        [items]="SupplierList"
+                        [disabled]="ReqTempLst.length !== 0"
+                        placeholder="Select"
+                        bindLabel="Supname"
+                        bindValue="SupID"
+                        [(ngModel)]="SupplierInfo.SupID"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Payment Terms </label>
+                    <div class="col-md-3">
+                      <ng-select
+                        [items]="PaymentTerms"
+                        placeholder="Select"
+                        bindLabel="Name"
+                        bindValue="Value"
+                        [(ngModel)]="PaymentTermID"
+                      >
+                      </ng-select>
+                    </div>
+                    <label class="col-md-3 control-label"> Maturity Date </label>
+                    <div class="col-md-3">
+                      <ng-select
+                        [items]="MaturityDays"
+                        placeholder="Select"
+                        bindLabel="Name"
+                        bindValue="Value"
+                        [(ngModel)]="MaturityDaysID"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Partial delivery type </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="ChkBreak" type="checkbox" [(ngModel)]="PartialDelivery" />
+                          <label for="ChkBreak">
+                            <span *ngIf="PartialDelivery"> Allowed </span>
+                            <span *ngIf="!PartialDelivery"> NotAllowed </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <label class="col-md-3 control-label"> Aggrement No </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="AggrementNO" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>BarCode</th>
+                        <th>Description</th>
+                        <th>Fair Price</th>
+                        <th>New Price</th>
+                        <th>CPU</th>
+                        <th>Box Quantity</th>
+                        <th>UOM</th>
+                        <th>Quantity</th>
+                        <th>BOX UOM</th>
+                        <th>DeliveryDate</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="ReqTempLst?.length !== 0">
+                      <tr *ngFor="let d of ReqTempLst">
+                        <td class="postable">
+                          <input
+                            type="checkbox"
+                            [(ngModel)]="d.ischeck"
+                            [disabled]="d.enabled"
+                            (ngModelChange)="SelectedItem(d)"
+                          />
+                          <label>
+                            <span class="btn text-danger selectedd" *ngIf="d.ischeck"> selected </span>
+
+                            <span class="btn text-primary selectedd" *ngIf="!d.ischeck">select </span>
+                          </label>
+                        </td>
+                        <td>{{ d.BarCode }}</td>
+                        <td>{{ d.PrdDescription }}</td>
+                        <td>{{ d.RPU }}</td>
+                        <td>
+                          <input
+                            [disabled]="d.enabled"
+                            (change)="UpdateRPUDeliveryDate(d)"
+                            type="text"
+                            class="form-control bg-warning"
+                            [(ngModel)]="d.CRPU"
+                          />
+                        </td>
+                        <td>{{ d.CPU }}</td>
+                        <td>{{ d.POPackQty }}</td>
+                        <td>{{ d.UnitUOM }}</td>
+                        <td>{{ d.Qty }}</td>
+                        <td>{{ d.BoxUOM }}</td>
+                        <td>
+                          <input
+                            [disabled]="d.enabled"
+                            (change)="UpdateRPUDeliveryDate(d)"
+                            type="date"
+                            class="form-control bg-warning"
+                            [(ngModel)]="d.DeliveryDate"
+                          />
+                        </td>
+                        <!-- <td>
+                          <button class="btn btn-pill btn-danger" type="button">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td> -->
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="ReqTempLst?.length === 0">
+                      <tr>
+                        <td colspan="12" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-md-3 control-label">
+                        Total Price :&ensp;&ensp;&ensp;<strong> &ensp; {{ totalAmount }}</strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Product Quantity :&ensp;&ensp;&ensp;<strong> &ensp; {{ totalItem }}</strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Total Quantity :&ensp;&ensp;&ensp;<strong> &ensp; {{ totalQty }} </strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Order Date :&ensp;&ensp;&ensp;<strong> &ensp; {{ orderDate | date: 'dd-MMM-yyyy' }} </strong>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-4">
+                  <button type="submit" class="btn btn-secondary" (click)="previewReport()">
+                    <i class="fa fa-eye"></i>
+                    Preview Report
+                  </button>
+                  <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                    <i class="fa fa-check"></i>
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-inverse">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

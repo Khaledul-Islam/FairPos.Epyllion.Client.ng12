@@ -1,0 +1,205 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Conversion Item</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Conversion Item</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Conversion Item</h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Supplier</label>
+                    <div class="col-md-9">
+                      <ng-select
+                        [items]="SupplierList"
+                        placeholder="Select"
+                        bindLabel="Supname"
+                        bindValue="SupID"
+                        [disabled]="dataList.length !== 0"
+                        [(ngModel)]="ItemConv.SupID"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Description</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [disabled]="dataList.length !== 0"
+                          [(ngModel)]="ItemConv.ItemFullName"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Barcode </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="ItemConv.BarCode"
+                          (dblclick)="GetProductsSupplier(ItemConv.BarCode)"
+                          (keyup.enter)="GetProductsSupplier(ItemConv.BarCode)"
+                        />
+                      </div>
+                    </div>
+                    <label class="col-md-3 control-label"> Sell Price </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [disabled]="dataList.length !== 0"
+                          [(ngModel)]="ItemConv.sellPrice"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Box QTY </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [disabled]="dataList.length !== 0"
+                          [(ngModel)]="ItemConv.boxQTY"
+                        />
+                      </div>
+                    </div>
+                    <label class="col-md-3 control-label"> Unit QTY </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [disabled]="dataList.length !== 0"
+                          [(ngModel)]="ItemConv.unitQTY"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Barcode</th>
+                        <th>Item Name</th>
+                        <th>UOM</th>
+                        <th>Box Size</th>
+                        <th>BOX UOM</th>
+                        <th>QTY</th>
+                        <th>ExpireDate</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dataList?.length !== 0">
+                      <tr *ngFor="let d of dataList">
+                        <td>{{ d.Barcode }}</td>
+                        <td>{{ d.ItemName }}</td>
+                        <td>{{ d.UOMName }}</td>
+                        <td>{{ d.BoxSize }}</td>
+                        <td>{{ d.BoxUOMName }}</td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control bg-warning"
+                            [(ngModel)]="d.QTY"
+                            (change)="qtyChange()"
+                          />
+                        </td>
+                        <!--conf-->
+                        <td>{{ d.ExpireDate | date: 'dd/MMM/yy' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-md-3 control-label">
+                        Total Quantity :&ensp;&ensp;&ensp;<strong>{{ totalqty }} &ensp; </strong>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-6 col-md-6">
+                  <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                    <i class="fa fa-check"></i>
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <app-conv-modal (SelectEvent)="receiveItemSelection($event)"></app-conv-modal>
+  <!-- Column -->
+</div>
+<!-- Row -->

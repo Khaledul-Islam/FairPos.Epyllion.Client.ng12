@@ -1,0 +1,128 @@
+<button class="btn btn-danger mb-1" id="btnLoadItemlist" style="visibility: collapse" (click)="open(contentItems)">
+  Open Product
+</button>
+
+<ng-template #contentItems let-c="close" let-d="dismiss">
+  <div class="modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Sales Order</h4>
+        <button class="close" type="button" data-dismiss="modal" (click)="close(contentItems)" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-7">
+            <div class="row">
+              <div class="col-12">
+                <div *ngFor="let product of ProductList" class="custom-sels-btn">
+                  <button class="btn btn-secondary" type="submit" (click)="selectProduct(product.PrdID)">
+                    {{ product.PrdName }}
+                  </button>
+                </div>
+              </div>
+              <div class="col-12">
+                <div *ngFor="let buy of buyList" class="custom-sels-btn">
+                  <button class="btn btn-primary" type="submit" (click)="TempSalesOrderSave(buy)">
+                    {{ buy.ProductDescription }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-5">
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-md-3 control-label">Name :</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <label class="control-label"
+                    ><strong>{{ employee.Name }}</strong></label
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-md-3 control-label"> Credit Limit :</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <label class="control-label"
+                    ><strong>{{ employee.AvailableLimit }}</strong></label
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+            <div class="row">
+              <div class="col-sm-12">
+                <table
+                  id="myTable"
+                  class="table table-bordered table-striped dataTable no-footer"
+                  role="grid"
+                  aria-describedby="myTable_info"
+                >
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>QTY</th>
+                      <th>Price</th>
+                      <th>Total Price</th>
+                      <th>Operation</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="TempSalesOrderList?.length !== 0">
+                    <tr *ngFor="let d of TempSalesOrderList" class="text-center">
+                      <td>{{ d.ItemName }}</td>
+                      <td>{{ d.QTY }}</td>
+                      <td>{{ d.RPU }}</td>
+                      <td>{{ d.TotalAmnt }}</td>
+                      <td>
+                        <button class="btn btn-pill btn-danger" type="button" (click)="deleteButtonClick(d)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <label class="col-md-12 control-label">
+                      Total Amount :&ensp;&ensp;&ensp;<strong>{{ totalprice }} &ensp; </strong>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Begin Button -->
+      <div class="row">
+        <div class="offset-sm-8 col-md-12">
+          <button type="submit" class="btn btn-secondary" (click)="PreviewButtonClick()">
+            <i class="fa fa-eye"></i>
+            Preview
+          </button>
+          <button type="submit" class="btn btn-success" (click)="SaveSalesOrder()">
+            <i class="fa fa-check"></i>
+            Submit sales order
+          </button>
+          <button type="button" class="btn btn-inverse" (click)="close(contentItems)">
+            <i class="fas fa-times"> </i>
+            Close
+          </button>
+        </div>
+      </div>
+      <br />
+    </div>
+    <!-- End Button -->
+  </div>
+</ng-template>

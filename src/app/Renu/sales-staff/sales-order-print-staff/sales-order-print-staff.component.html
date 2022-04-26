@@ -1,0 +1,138 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Print Sales Order</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Print Sales Order</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Print Sales Order</h3>
+                  <hr />
+                  <div class="row">
+                    <div class="col-7">
+                      <div class="row">
+                        <div class="col-12">
+                          <h1 *ngIf="pendingSO.length === 0" class="text-warning">No Pending Order to Print</h1>
+                          <div *ngFor="let p of pendingSO" class="custom-sels-btn">
+                            <button class="btn btn-secondary" type="submit" (click)="GetOrderDetails(p)">
+                              {{ p }}
+                            </button>
+                          </div>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div *ngFor="let buy of buyList" class="custom-sels-btn">
+                              <button class="btn btn-primary" type="submit" (click)="TempSalesOrderSave(buy)">
+                                {{ buy.ProductDescription }}
+                              </button>
+                            </div>
+                          </div> -->
+                      </div>
+                    </div>
+                    <div class="col-5" *ngIf="pendingSO.length !== 0">
+                      <!-- Begin Form Group -->
+                      <div class="form-group row">
+                        <label class="col-md-3 control-label">Name :</label>
+                        <div class="col-md-9">
+                          <div class="input-group">
+                            <label class="control-label"
+                              ><strong>{{ employee.Name }}</strong></label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Form Group -->
+                      <!-- Begin Form Group -->
+                      <div class="form-group row">
+                        <label class="col-md-3 control-label"> Credit Limit :</label>
+                        <div class="col-md-9">
+                          <div class="input-group">
+                            <label class="control-label"
+                              ><strong>{{ employee.AvailableLimit }}</strong></label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Form Group -->
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <table
+                            id="myTable"
+                            class="table table-bordered table-striped dataTable no-footer"
+                            role="grid"
+                            aria-describedby="myTable_info"
+                          >
+                            <thead>
+                              <tr class="text-center">
+                                <th>Item Name</th>
+                                <th>QTY</th>
+                                <th>Price</th>
+                                <th>Total Price</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngIf="orderDetailsList?.length !== 0">
+                              <tr *ngFor="let d of orderDetailsList" class="text-center">
+                                <td>{{ d.ItemName }}</td>
+                                <td>{{ d.QTY }}</td>
+                                <td>{{ d.RPU }}</td>
+                                <td>{{ d.TOTAL_AMT }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <div class="row">
+                              <label class="col-md-12 control-label">
+                                Total Amount :&ensp;&ensp;&ensp;<strong>{{ totalprice }} &ensp; </strong>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="pendingSO.length !== 0">
+                    <div class="offset-sm-8 col-md-10">
+                      <div class="input-group form-control mr-3">
+                        <label for="chk">isPrint?</label>
+                        <input id="chk" type="checkbox" [(ngModel)]="isPrint" />
+                      </div>
+                      <button type="submit" class="btn btn-success" (click)="verifyItem()">
+                        <i class="fa fa-print"></i>
+                        Print sales order
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--   end card body -->
+      </div>
+    </div>
+
+    <!-- Column -->
+  </div>
+  <app-verify-item-staff (SelectEvent)="receiveItemSelection($event)"></app-verify-item-staff>
+  <!-- Row -->
+</div>

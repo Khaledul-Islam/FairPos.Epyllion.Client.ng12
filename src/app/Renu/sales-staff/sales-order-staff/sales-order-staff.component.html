@@ -1,0 +1,154 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Staff Sales Order</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Sales Order</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Staff Sales Order</h3>
+                  <hr />
+                </div>
+                <div class="col-md-2">
+                  <!-- Begin Form Group -->
+                  <div *ngIf="Employee.EmpImage !== undefined" class="form-group row">
+                    <div class="col-md-9">
+                      <img
+                        alt="..."
+                        class="img-thumbnail"
+                        style="height: 200px; width: 200px"
+                        [src]="'data:image/png;base64,' + Employee.EmpImage"
+                      />
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">RFID Card</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          (keyup.enter)="GetEmployeeDetails()"
+                          [(ngModel)]="Employee.RFCardNo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Name</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="Employee.Name" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Credit Limit</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="Employee.CreditLimit" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Available Limit</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="Employee.AvailableLimit" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row" *ngIf="InvoiceList?.length !== 0">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    datatable
+                    [dtOptions]="dtOptions"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Invoice</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="InvoiceList?.length !== 0">
+                      <tr *ngFor="let d of InvoiceList">
+                        <td>{{ d.SaleDTT | date: 'dd-MM-yyyy' }}</td>
+                        <td>{{ d.Invoice }}</td>
+                        <td>{{ d.NetAmt }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="row">
+                <div class="offset-sm-6 col-md-6">
+                  <button (click)="proceesSaleClick()" type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Proceed to Sales
+                  </button>
+                  <button (click)="cancelClick()" class="btn btn-danger">
+                    <i class="fa fa-redo"></i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <app-sales-modal-w-staff (SelectEvent)="receiveItemSelection($event)"></app-sales-modal-w-staff>
+  <!-- Column -->
+</div>
+<!-- Row -->

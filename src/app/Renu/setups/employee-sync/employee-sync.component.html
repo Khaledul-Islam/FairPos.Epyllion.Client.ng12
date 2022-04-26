@@ -1,0 +1,135 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Employee Sync</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Employee Sync</li>
+    </ol>
+  </div>
+
+  <div class="col-md-6 col-4 align-self-center">
+    <div *ngIf="isInsertMode === false; else insertMode">
+      <button class="btn float-right hidden-sm-down btn-success" (click)="SyncButtonClick()">
+        <i class="mdi mdi-plus-circle"></i> Sync
+      </button>
+    </div>
+    <ng-template #insertMode> </ng-template>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isInsertMode === false; else insertMode2">
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                    datatable
+                    [dtOptions]="dtOptions"
+                  >
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Card No</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Name Bangla</th>
+                        <th>Staff Type</th>
+                        <th>Designation</th>
+                        <!-- <th>Operation</th> -->
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dataList?.length !== 0">
+                      <tr *ngFor="let d of dataList">
+                        <td>{{ d.EmpID }}</td>
+                        <td>{{ d.RFCardNo }}</td>
+                        <td>{{ d.Name }}</td>
+                        <td>{{ d.Department }}</td>
+                        <td>{{ d.Email }}</td>
+                        <td>{{ d.NameBangla }}</td>
+                        <td>{{ d.StaffType }}</td>
+                        <td>{{ d.vDesignation }}</td>
+                        <!-- <td>
+                                                    <button class="btn btn-pill btn-warning" type="button"
+                                                        (click)='editbuttonClick(d.EmpID)'>
+                                                        <i class="fa fa-edit"></i>&nbsp;Edit
+                                                    </button>
+                                                </td> -->
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="dataList?.length === 0">
+                      <tr>
+                        <td colspan="5" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #insertMode2>
+          <br />
+          <div class="col-md-7">
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Employee Name*</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input type="text" class="form-control" [(ngModel)]="model.Name" placeholder="Enter Employee Name" />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Button -->
+            <hr />
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="offset-sm-3 col-md-9">
+                      <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                        <i class="fa fa-check"></i>
+                        {{ buttonText }}
+                      </button>
+                      <button type="submit" class="btn btn-danger" (click)="deleteButtonClick()">
+                        <i class="fas fa-recycle"></i>
+                        Delete
+                      </button>
+                      <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                        <i class="fas fa-undo"> </i>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+              </div>
+            </div>
+
+            <!-- End Button -->
+          </div>
+        </ng-template>
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

@@ -1,0 +1,245 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Arrival Edit</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Arrival Update</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Arrival Edit</h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Arrival NO. </label>
+                    <div class="col-md-9">
+                      <ng-select
+                        [items]="arrivalDDL"
+                        placeholder="Select"
+                        bindLabel="ARRIVAL_NO"
+                        bindValue="ARRIVAL_NO"
+                        [(ngModel)]="tmpArrivalUp.ARRIVAL_NO"
+                        [disabled]="tmpArrivalUpList.length !== 0"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Challlan NO.</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="tmpArrivalUp.RefNo" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Supplier</label>
+                    <div class="col-md-7">
+                      <ng-select
+                        [items]="SupplierList"
+                        placeholder="Select"
+                        bindLabel="Supname"
+                        bindValue="SupID"
+                        [(ngModel)]="tmpArrivalUp.SupID"
+                        disabled
+                      >
+                      </ng-select>
+                    </div>
+                    <div class="col-md-2" *ngIf="tmpArrivalUpList.length === 0">
+                      <button class="btn btn-md float-right hidden-md-down btn-primary" (click)="LoadProduct()">
+                        <i class="mdi mdi-sync"></i> Load
+                      </button>
+                    </div>
+                    <div class="col-md-2" *ngIf="tmpArrivalUpList.length !== 0">
+                      <button class="btn btn-md float-right hidden-md-down btn-primary" (click)="clearButtonClick()">
+                        <i class="mdi mdi-delete"></i> Clear
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Date </label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="tmpArrivalUp.RefDate" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Receive Date </label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="tmpArrivalUp.BuyDT" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Barcode</th>
+                        <th>Description</th>
+                        <th>Fair Price</th>
+                        <th>Order Size</th>
+                        <th>Order QTY</th>
+                        <th>Arrival Size</th>
+                        <th>UOM</th>
+                        <th>Arrival QTY</th>
+                        <th>Box UOM</th>
+                        <th>Gift Item</th>
+                        <th>Gift Descrip.</th>
+                        <th>EXP DT.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let d of tmpArrivalUpList">
+                        <td>{{ d.BarCode }}</td>
+                        <td>{{ d.ItemFullName }}</td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control bg-warning"
+                            (change)="updateTmpArrival(d)"
+                            [(ngModel)]="d.RPU"
+                          />
+                        </td>
+                        <td>{{ d.POBoxQty }}</td>
+                        <td>{{ d.PoQty }}</td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control bg-warning"
+                            (change)="updateTmpArrival2(d)"
+                            [(ngModel)]="d.BoxQty"
+                          />
+                        </td>
+                        <td>{{ d.UnitUOM }}</td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control bg-warning"
+                            (change)="updateTmpArrival3(d)"
+                            [(ngModel)]="d.ArrivalQty"
+                          />
+                        </td>
+                        <td>{{ d.BoxUOM }}</td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control bg-warning"
+                            (change)="updateTmpArrival(d)"
+                            [(ngModel)]="d.GIFT_RATIO"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control bg-warning"
+                            (change)="updateTmpArrival(d)"
+                            [(ngModel)]="d.GIFT_DESCRIPTION"
+                          />
+                        </td>
+                        <td>{{ d.EXPDT | date: 'dd-MM-yy' }}</td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="tmpArrivalUpList?.length === 0">
+                      <tr>
+                        <td colspan="12" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-md-3 control-label">
+                        Total Price:&ensp;&ensp;&ensp;<strong>{{ GrantTotal }} &ensp; TK</strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Product Quantity :&ensp;&ensp;&ensp;<strong>{{ GrantQuantity }} &ensp; </strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Total Quantity :&ensp;&ensp;&ensp;<strong>{{ ItemQuantity }} &ensp; </strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Order Date :&ensp;&ensp;&ensp;<strong>{{ OrderDate | date: 'dd-MM-yyyy' }} &ensp; </strong>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-6 col-md-6">
+                  <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                    <i class="fa fa-check"></i>
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="cancelButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+
+  <!-- Column -->
+</div>
+<!-- Row -->

@@ -1,0 +1,178 @@
+<!-- <div class="container-fluid">
+  <div class="jumbotron text-center">
+    <h1>
+      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo" />
+      <span translate>Hello world !</span>
+    </h1>
+    <app-loader [isLoading]="isLoading"></app-loader>
+    <q [hidden]="isLoading">{{ quote }}</q>
+  </div>
+</div> -->
+
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Product List</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Product List</li>
+    </ol>
+  </div>
+
+  <div class="col-md-6 col-4 align-self-center">
+    <div *ngIf="isInsertMode == false; else insertMode">
+      <button class="btn float-right hidden-sm-down btn-success" (click)="createButtonClick()">
+        <i class="mdi mdi-plus-circle"></i> Create
+      </button>
+    </div>
+    <ng-template #insertMode> </ng-template>
+  </div>
+
+  <!-- <div class="col-md-6 col-4 align-self-center">
+      <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i
+          class="ti-settings text-white"></i></button>
+      <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>
+        Create</button>
+      <div class="dropdown float-right mr-2 hidden-sm-down">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> January 2019 </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February
+            2019</a> <a class="dropdown-item" href="#">March 2019</a> <a class="dropdown-item" href="#">April 2019</a>
+        </div>
+      </div>
+    </div> -->
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isInsertMode == false; else insertMode2">
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                    datatable
+                    [dtOptions]="dtOptions"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Name Bangla</th>
+                        <th>Operation</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dataList?.length != 0">
+                      <tr *ngFor="let d of dataList">
+                        <td>{{ d.PrdID }}</td>
+                        <td>{{ d.PrdName }}</td>
+                        <td>{{ d.PrdNameBangla }}</td>
+
+                        <td>
+                          <button class="btn btn-pill btn-warning" type="button" (click)="editbuttonClick(d.PrdID)">
+                            <i class="fa fa-edit"></i>&nbsp;Edit
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="dataList?.length == 0">
+                      <tr>
+                        <td colspan="3" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #insertMode2>
+          <br />
+          <div class="col-md-7">
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Prd Name*</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="model.PrdName"
+                    placeholder="Enter Product Name"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Prd Name Bangla</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="model.PrdNameBangla"
+                    placeholder="Enter Product Name Bangla"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Button -->
+            <hr />
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="offset-sm-3 col-md-9">
+                      <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                        <i class="fa fa-check"></i>
+                        {{ buttonText }}
+                      </button>
+                      <button type="submit" class="btn btn-danger" (click)="deleteButtonClick()">
+                        <i class="fas fa-recycle"></i>
+                        Delete
+                      </button>
+                      <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                        <i class="fas fa-undo"> </i>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+              </div>
+            </div>
+
+            <!-- End Button -->
+          </div>
+        </ng-template>
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

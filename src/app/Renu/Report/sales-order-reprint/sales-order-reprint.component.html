@@ -1,0 +1,105 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Sales Order Reprint</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Sales Order Reprint</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="row">
+            <div class="col-md-12">
+              <br />
+              <h3>Sales Order Reprint</h3>
+              <hr />
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">From Date</label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <input type="date" class="form-control" [(ngModel)]="fromDate" />
+                  </div>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">To Date</label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <input type="date" class="form-control" [(ngModel)]="toDate" />
+                  </div>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">RFid Card</label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="rfId" />
+                  </div>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-6 control-label"></label>
+                <div class="col-md-6">
+                  <button type="submit" class="btn btn-secondary" (click)="nextButtonClick()">
+                    <i class="fa fa-arrow-right"></i>
+                    Next
+                  </button>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">Invoice</label>
+                <div class="col-md-9">
+                  <ng-select
+                    [items]="collectionList"
+                    placeholder="Select"
+                    bindLabel="SO_NO"
+                    bindValue="SO_NO"
+                    [(ngModel)]="invoice"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <div class="row">
+                <div class="offset-sm-6 col-md-6">
+                  <button type="submit" class="btn btn-success" (click)="reportButtonClick()">
+                    <i class="fa fa-file"></i>
+                    Report
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="calcelButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--   end card body -->
+</div>
+<!-- Row -->

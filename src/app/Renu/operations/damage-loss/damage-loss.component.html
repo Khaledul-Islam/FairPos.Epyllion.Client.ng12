@@ -1,0 +1,263 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Damage Loss</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Damage Loss</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Damage Loss</h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-2 control-label" for="main">Main Stock</label>
+                    <div class="col-md-2">
+                      <input
+                        type="radio"
+                        value="false"
+                        [disabled]="damageLossList.length !== 0"
+                        [checked]="buydDetails.IsDamageStock === false"
+                        id="point1"
+                        (change)="IsDamageStock(false)"
+                        name="ProfitCode"
+                      />
+                    </div>
+                    <label class="col-md-3 control-label" for="damage">Damage Stock</label>
+                    <div class="col-md-2">
+                      <input
+                        type="radio"
+                        value="true"
+                        [disabled]="damageLossList.length !== 0"
+                        [checked]="buydDetails.IsDamageStock === true"
+                        id="point2"
+                        (change)="IsDamageStock(true)"
+                        name="ProfitCode"
+                      />
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Supplier</label>
+                    <div class="col-md-9">
+                      <ng-select
+                        [items]="supplierList"
+                        placeholder="Select"
+                        bindLabel="Supname"
+                        [disabled]="damageLossList.length !== 0"
+                        bindValue="SupID"
+                        [(ngModel)]="buydDetails.SupID"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Description</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="buydDetails.ProductDescription" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Reason</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="buydDetails.reason" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Barcode </label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="buydDetails.BarCode"
+                          (keyup.enter)="GetProductSupplier(buydDetails.BarCode)"
+                          (dblclick)="GetProductSupplier(buydDetails.BarCode)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Sell Price </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="buydDetails.RPU" />
+                      </div>
+                    </div>
+                    <label class="col-md-3 control-label"> Stock </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="buydDetails.balQty" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label"> Box </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="buydDetails.bQty"
+                          (change)="calculateBox(buydDetails.bQty)"
+                        />
+                      </div>
+                      {{ buydDetails.UOMName }}
+                    </div>
+                    <label class="col-md-3 control-label"> QTY </label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="buydDetails.Qty"
+                          (change)="calculateQTY(buydDetails.Qty)"
+                        />
+                      </div>
+                      {{ buydDetails.BoxUOMName }}
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-md float-right hidden-md-down btn-success" (click)="AddButonClick()">
+                    <i class="mdi mdi-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    datatable
+                    [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger"
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                  >
+                    <thead>
+                      <tr>
+                        <th>BarCode</th>
+                        <th>Description</th>
+                        <th>Sell Price</th>
+                        <th>Quantity</th>
+                        <th>UOM</th>
+                        <th>Quantity</th>
+                        <th>UOM</th>
+                        <th>Gift Product</th>
+                        <th>Oeration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let d of damageLossList">
+                        <td>{{ d.BarCode }}</td>
+                        <td>{{ d.PrdName }}</td>
+                        <td>{{ d.RPU }}</td>
+                        <td>{{ d.BoxQty }}</td>
+                        <td>{{ d.UnitUOM }}</td>
+                        <td>{{ d.Qty }}</td>
+                        <td>{{ d.BoxUOM }}</td>
+                        <td>{{ d.IsGiftItemAvailable }}</td>
+                        <td>
+                          <button class="btn btn-pill btn-danger" type="button" (click)="deleteButtonClick(d)">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="damageLossList?.length === 0">
+                      <tr>
+                        <td colspan="12" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-md-3 control-label"> </label>
+                      <label class="col-md-3 control-label">
+                        Total Product :&ensp;&ensp;&ensp;<strong>{{ count }} &ensp; </strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Total Quantity :&ensp;&ensp;&ensp;<strong>{{ TotalQTY }} &ensp; </strong>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-6 col-md-6">
+                  <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                    <i class="fa fa-check"></i>
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <app-damage-modal (SelectEvent)="receiveItemSelection($event)"></app-damage-modal>
+  <!-- Column -->
+</div>
+<!-- Row -->

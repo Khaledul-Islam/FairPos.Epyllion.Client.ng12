@@ -1,0 +1,307 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Purchase Order</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Purchase Order</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <span style="font-size: 150%">Purchase Order</span>
+                  <span class="float-right text-success"
+                    >Current Month P/O Budget : BDT/- <b>{{ monthlyBudget }}</b></span
+                  >
+                  <hr />
+                </div>
+                <div class="col-md-5">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Supplier*</label>
+                    <div class="col-md-9">
+                      <ng-select
+                        [items]="SupplierList"
+                        placeholder="Select"
+                        bindLabel="Supname"
+                        bindValue="SupID"
+                        (change)="ChangeSupplier(PurchaseOrderTemp.SupID)"
+                        [(ngModel)]="PurchaseOrderTemp.SupID"
+                        [disabled]="BuyOrderTemp?.length !== 0"
+                      >
+                      </ng-select>
+                      <!--[disabled]="BuyOrderTemp?.length !== 0"-->
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Description</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="PurchaseOrderTemp.ItemFullName" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Delivery Date*</label>
+                    <div class="col-md-7">
+                      <div class="input-group">
+                        <input
+                          type="date"
+                          class="form-control"
+                          [(ngModel)]="PurchaseOrderTemp.DeliveryDate"
+                          [disabled]="BuyOrderTemp?.length !== 0"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-md float-right hidden-md-down btn-success" (click)="AddProduct()">
+                        <i class="mdi mdi-plus"></i> Add
+                      </button>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+
+                <div class="col-md-7">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-2 control-label"> Barcode* </label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          (keyup.enter)="GetProductDetails(PurchaseOrderTemp.Barcode)"
+                          (dblclick)="GetProductDetails(PurchaseOrderTemp.Barcode)"
+                          [(ngModel)]="PurchaseOrderTemp.Barcode"
+                        />
+                      </div>
+                    </div>
+                    <label class="col-md-2 control-label"> Payment Terms </label>
+                    <div class="col-md-2">
+                      <ng-select
+                        [items]="PaymentTerms"
+                        placeholder="Select"
+                        bindLabel="Name"
+                        bindValue="Value"
+                        [(ngModel)]="PurchaseOrderTemp.PaymentTermID"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-2"> Stock </label>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="PurchaseOrderTemp.totalstock" />
+                      </div>
+                    </div>
+                    <label class="col-md-2"> Fair Price </label>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="PurchaseOrderTemp.RPU" />
+                      </div>
+                    </div>
+
+                    <label class="col-md-2 control-label"> Maturity Date </label>
+                    <div class="col-md-2">
+                      <ng-select
+                        [items]="MaturityDays"
+                        placeholder="Select"
+                        bindLabel="Name"
+                        bindValue="Value"
+                        [(ngModel)]="PurchaseOrderTemp.MaturityDaysID"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-2"> Pack Size* </label>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          (change)="CalculatePackSize()"
+                          [(ngModel)]="PurchaseOrderTemp.POPackSizeQTY"
+                        />
+                      </div>
+                      {{ PurchaseOrderTemp.PackUiomName }}
+                    </div>
+                    <label class="col-md-2 control-label">Quantity </label>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="PurchaseOrderTemp.QTY" />
+                      </div>
+                      {{ PurchaseOrderTemp.BOXUOMName }}
+                    </div>
+                    <label class="col-md-2 control-label"> Partial delivery type </label>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="ChkBreak" type="checkbox" [(ngModel)]="PurchaseOrderTemp.PartialDelivery" />
+                          <label for="ChkBreak">
+                            <span *ngIf="PurchaseOrderTemp.PartialDelivery"> Allowed </span>
+                            <span *ngIf="!PurchaseOrderTemp.PartialDelivery"> NotAllowed </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-2"> </label>
+                    <div class="col-md-1"></div>
+                    <label class="col-md-2 control-label">Shop</label>
+                    <div class="col-md-3">
+                      <ng-select
+                        [items]="shopList"
+                        placeholder="Select"
+                        bindLabel="ShopName"
+                        bindValue="ShopID"
+                        [(ngModel)]="ShopID"
+                        (change)="changeShop()"
+                      >
+                      </ng-select>
+                    </div>
+                    <label class="col-md-2 control-label"> Aggrement No </label>
+                    <div class="col-md-2">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="PurchaseOrderTemp.QtrefNo" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    datatable
+                    [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger"
+                    class="table table-bordered table-striped"
+                    role="grid"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Barcode</th>
+                        <th>Description</th>
+                        <th>Fair Price</th>
+                        <th>Box Quantity</th>
+                        <th>UOM</th>
+                        <th>Quantity</th>
+                        <th>UOM</th>
+                        <th>Delivery Date</th>
+                        <th>Operation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let d of BuyOrderTemp">
+                        <td>{{ d.BarCode }}</td>
+                        <td>{{ d.PrdDescription }}</td>
+                        <td>{{ d.RPU }}</td>
+                        <td>{{ d.POPackQty }}</td>
+                        <td>{{ d.PackUOM }}</td>
+                        <td>{{ d.Qty }}</td>
+                        <td>{{ d.UnitUOM }}</td>
+                        <td>{{ formatDate(d.DeliveryDate) }}</td>
+                        <td>
+                          <button class="btn btn-pill btn-danger" type="button" (click)="deleteButtonClick(d)">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="BuyOrderTemp?.length === 0">
+                      <tr>
+                        <td colspan="12" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-md-3 control-label">
+                        Total Price:&ensp;&ensp;&ensp;<strong>{{ GrantTotal }} &ensp; TK</strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Product Quantity :&ensp;&ensp;&ensp;<strong>{{ GrantQuantity }} &ensp; </strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Total Quantity :&ensp;&ensp;&ensp;<strong>{{ ItemQuantity }} &ensp; </strong>
+                      </label>
+                      <label class="col-md-3 control-label">
+                        Order Date :&ensp;&ensp;&ensp;<strong>{{ OrderDate | date: 'dd-MM-yyyy' }} &ensp; </strong>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-4 col-md-4">
+                  <button type="submit" class="btn btn-secondary" (click)="previewReport()">
+                    <i class="fa fa-eye"></i>
+                    Preview Report
+                  </button>
+                  <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                    <i class="fa fa-check"></i>
+                    Purchase Order
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+  <app-item-selection-supplier (SelectEvent)="receiveItemSelection($event)"></app-item-selection-supplier>
+</div>
+<!-- Row -->

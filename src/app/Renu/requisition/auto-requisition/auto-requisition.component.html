@@ -1,0 +1,167 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Auto Requisition</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Auto Requisition</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive m-t-40">
+          <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>Auto Requisition</h3>
+                <hr />
+              </div>
+              <div class="col-md-12">
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <div class="col-md-2">
+                    <button
+                      [disabled]="reqTempLst?.length !== 0"
+                      class="btn btn-primary"
+                      (click)="generateButtonClick()"
+                    >
+                      <i class="mdi mdi-sync"></i> Generate
+                    </button>
+                  </div>
+                  <div class="col-md-2">
+                    <button [disabled]="reqTempLst?.length === 0" class="btn btn-primary" (click)="clearButtonClick()">
+                      <i class="mdi mdi-delete"></i> Clear
+                    </button>
+                  </div>
+                  <div class="col-md-7 textallign">
+                    <h3>Current Month Requisition Limit : BDT/- {{ monthlyBudget }}</h3>
+                    <h3 class="text-danger">Current Consume : BDT/- {{ totalAmount }}</h3>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <table
+                  id="myTable"
+                  class="table table-bordered table-striped dataTable no-footer"
+                  role="grid"
+                  [dtTrigger]="dtTrigger"
+                  datatable
+                  [dtOptions]="dtOptions"
+                  aria-describedby="myTable_info"
+                >
+                  <thead>
+                    <tr>
+                      <th>BarCode</th>
+                      <th>Description</th>
+                      <th>Fair Price</th>
+                      <th>Box Quantity</th>
+                      <th>UOM</th>
+                      <th>Suggested QTY</th>
+                      <th>UOM</th>
+                      <th>Actual (+-20%)</th>
+                      <!-- <input type="text" class="form-control bg-warning" [(ngModel)]="d.QCBoxQty" /> -->
+                      <th>Remark</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="reqTempLst?.length !== 0">
+                    <tr *ngFor="let d of reqTempLst">
+                      <td>{{ d.BarCode }}</td>
+                      <td>{{ d.PrdDescription }}</td>
+                      <td>{{ d.RPU }}</td>
+                      <td>{{ d.POPackQty }}</td>
+                      <td>{{ d.PackUOM }}</td>
+                      <td>{{ d.BoxQty }}</td>
+                      <td>{{ d.UnitUOM }}</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control bg-warning"
+                          [(ngModel)]="d.ActualBoxQty"
+                          (change)="ChangeActualBoxQty(d)"
+                        />
+                      </td>
+                      <td>{{ d.Remarks }}</td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="reqTempLst?.length === 0">
+                    <tr>
+                      <td colspan="12" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <label class="col-md-3 control-label">
+                      Total Price:&ensp;&ensp;&ensp;<strong> {{ totalAmount }}&ensp; TK</strong>
+                    </label>
+                    <label class="col-md-3 control-label">
+                      Product Quantity :&ensp;&ensp;&ensp;<strong>{{ totalItem }} &ensp; </strong>
+                    </label>
+                    <label class="col-md-3 control-label">
+                      Total Quantity :&ensp;&ensp;&ensp;<strong>{{ totalQty }} &ensp; </strong>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-4 col-md-4">
+                  <button type="submit" class="btn btn-secondary" (click)="previewButtonClick()">
+                    <i class="fa fa-eye"></i>
+                    Preiew
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    [disabled]="reqTempLst?.length === 0"
+                    (click)="SaveButtonClick()"
+                  >
+                    <i class="fa fa-file"></i>
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="cancelButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+
+  <!-- Column -->
+</div>
+<!-- Row -->

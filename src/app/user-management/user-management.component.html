@@ -1,0 +1,378 @@
+<!-- <div class="container-fluid">
+  <div class="jumbotron text-center">
+    <h1>
+      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo" />
+      <span translate>Hello world !</span>
+    </h1>
+    <app-loader [isLoading]="isLoading"></app-loader>
+    <q [hidden]="isLoading">{{ quote }}</q>
+  </div>
+</div> -->
+
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">User management</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">User management</li>
+    </ol>
+  </div>
+
+  <div class="col-md-6 col-4 align-self-center">
+    <div *ngIf="isInsertMode == false; else insertMode">
+      <button class="btn float-right hidden-sm-down btn-success" (click)="createButtonClick()">
+        <i class="mdi mdi-plus-circle"></i> Create
+      </button>
+    </div>
+    <ng-template #insertMode> </ng-template>
+  </div>
+
+  <!-- <div class="col-md-6 col-4 align-self-center">
+      <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i
+          class="ti-settings text-white"></i></button>
+      <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>
+        Create</button>
+      <div class="dropdown float-right mr-2 hidden-sm-down">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> January 2019 </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February
+            2019</a> <a class="dropdown-item" href="#">March 2019</a> <a class="dropdown-item" href="#">April 2019</a>
+        </div>
+      </div>
+    </div> -->
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isInsertMode == false; else insertMode2">
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                    datatable
+                    [dtOptions]="dtOptions"
+                  >
+                    <thead>
+                      <tr>
+                        <th>User Name</th>
+                        <!-- <th>FullName</th>
+                                                <th>MOBILE</th> -->
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Designation</th>
+                        <th>EmpId</th>
+                        <!-- <th>NID</th> -->
+                        <th>Operation</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="userList?.length != 0">
+                      <tr *ngFor="let person of userList">
+                        <td>{{ person.username }}</td>
+                        <!-- <td>{{ person.FullName }}</td>
+                                                <td>{{ person.MOBILE }}</td> -->
+                        <td>{{ person.Email }}</td>
+                        <td>{{ person.Address }}</td>
+                        <td>{{ person.Designation }}</td>
+                        <td>{{ person.EmpId }}</td>
+                        <!-- <td>{{ person.NID}}</td> -->
+                        <td>
+                          <button
+                            class="btn btn-pill btn-warning"
+                            type="button"
+                            (click)="editbuttonClick(person.username)"
+                          >
+                            <i class="fa fa-edit"></i>&nbsp;Edit
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="userList?.length == 0">
+                      <tr>
+                        <td colspan="3" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #insertMode2>
+          <div class="col-md-7">
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Username*</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="ti-user"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="userServer.username"
+                    placeholder="Enter Username"
+                    [disabled]="isUpdateMode"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Password*</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="ti-lock"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="userServer.password"
+                    placeholder="Enter Password"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Confirm Password*</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="ti-lock"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="userServer.Confirmpassword"
+                    placeholder="Enter Confirm Password"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Full Name</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="userServer.FullName"
+                    placeholder="Enter Full Name"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Address</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="userServer.Address"
+                    placeholder="Enter Address"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Email</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input type="text" class="form-control" [(ngModel)]="userServer.Email" placeholder="Enter Email" />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Active</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="checkbox checkbox-primary">
+                    <input id="isActive" type="checkbox" [(ngModel)]="userServer.isActive" />
+                    <label for="isActive">
+                      <span *ngIf="userServer.isActive"> Yes </span>
+                      <span *ngIf="!userServer.isActive"> No </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Email User Id</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="userServer.EmailUserId"
+                    placeholder="Enter Email User Id"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Email User Password</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="userServer.EmailPassword"
+                    placeholder="Enter Email User Password"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">External EmpId</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input type="text" class="form-control" [(ngModel)]="userServer.EmpId" placeholder="Enter EmpId" />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">User Type</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="user_type"
+                      checked="checked"
+                      value="Head Office"
+                      [(ngModel)]="userServer.UserType"
+                    />
+                      Head Office</label
+                  >
+                  <label>
+                      <input type="radio" name="user_type" value="Shop" [(ngModel)]="userServer.UserType" />  
+                    Shop</label
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-md-3 control-label">Shop</label>
+              <div class="col-md-9">
+                <ng-select
+                  [items]="ShopList"
+                  placeholder="Select"
+                  bindLabel="ShopName"
+                  bindValue="ShopID"
+                  [multiple]="false"
+                  autofocus
+                  [(ngModel)]="userShoptemp"
+                >
+                </ng-select>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Form Group -->
+            <div class="form-group row">
+              <label class="col-sm-3 control-label">Designation</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="userServer.Designation"
+                    placeholder="Enter Designation"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Begin Button -->
+            <hr />
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="offset-sm-3 col-md-9">
+                      <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                        <i class="fa fa-check"></i>
+                        {{ buttonText }}
+                      </button>
+                      <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                        <i class="fa fa-times"> </i>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- End Button -->
+          </div>
+        </ng-template>
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

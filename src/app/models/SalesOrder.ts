@@ -1,0 +1,37 @@
+export class SalesOrder {
+  public SO_ID: number | undefined;
+  public SO_NO: string | undefined;
+  public EmpID: number | undefined;
+  public sBarcode: string | undefined;
+  public Barcode: string | undefined;
+  public SupID: string | undefined;
+  public QTY: number | undefined;
+  public CPU: number | undefined;
+  public RPU: number | undefined;
+  public TOTAL_AMT: number | undefined;
+  public VAT_PRD: number | undefined;
+  public VAT: number | undefined;
+  public NET_AMT: number | undefined;
+  public CREATE_BY: string | undefined;
+  public CREATE_DATE: Date | undefined;
+  public EXPIRE_DATE: Date | undefined;
+  public IS_APPROVED: boolean | undefined;
+  public CounterId: string | undefined;
+  public IsGift: boolean | undefined;
+  public IsCanceld: boolean | undefined;
+  public IsAccountApproved: boolean | undefined;
+  public AccountApprovedBy: string | undefined;
+  public AccountApprodDate: Date | undefined;
+  public DeliverdCancelBy: string | undefined;
+  public DeliverDate: Date | undefined;
+  public AccountPayType: string | undefined;
+  public Expired: string | undefined;
+  public IS_Print: boolean | undefined;
+  public SalesStockType: string | undefined;
+  public ItemName: string | undefined;
+  public EmpName: string | undefined;
+  public Name: string | undefined;
+  public RFCardNo: string | undefined;
+  public CounterName: string | undefined;
+  public ShopId: string | undefined;
+}

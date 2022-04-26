@@ -1,0 +1,624 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Item List</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Item List</li>
+    </ol>
+  </div>
+
+  <div class="col-md-6 col-4 align-self-center">
+    <div *ngIf="isInsertMode === false; else insertMode">
+      <button class="btn float-right hidden-sm-down btn-success" (click)="createButtonClick()">
+        <i class="mdi mdi-plus-circle"></i> Create
+      </button>
+    </div>
+    <ng-template #insertMode> </ng-template>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isInsertMode === false; else insertMode2">
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                    datatable
+                    [dtOptions]="dtOptions"
+                  >
+                    <thead>
+                      <tr>
+                        <th>sBarcode</th>
+                        <th>Barcode</th>
+                        <th>Supplier Name</th>
+                        <th>Item Name &emsp;&emsp;&emsp;&emsp;</th>
+                        <th>CPU</th>
+                        <th>RPU</th>
+                        <th>UOM</th>
+                        <th>Conv Unit</th>
+                        <th>Conv UOM</th>
+                        <th>Changes</th>
+                        <th>Operation</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dataList?.length !== 0">
+                      <tr *ngFor="let d of dataList">
+                        <td>{{ d.sBarcode }}</td>
+                        <td>{{ d.Barcode }}</td>
+                        <td>{{ d.SupName }}</td>
+                        <td>{{ d.ItemName }}</td>
+                        <td>{{ d.CPU }}</td>
+                        <td>{{ d.RPU }}</td>
+                        <td>{{ d.UOMName }}</td>
+                        <td>{{ d.BoxSize }}</td>
+                        <td>{{ d.BOXUOMName }}</td>
+                        <td>{{ d.IsConverationItem }}</td>
+                        <td>
+                          <button class="btn btn-pill btn-warning" type="button" (click)="editbuttonClick(d.sBarcode)">
+                            <i class="fa fa-edit"></i>&nbsp;Edit
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="dataList?.length === 0">
+                      <tr>
+                        <td colspan="3" class="no-data-available">No data!</td>
+                      </tr>
+                    </tbody>
+
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #insertMode2>
+          <br />
+          <!-- Begin Form Group -->
+          <div class="tab-content tabcontent-border">
+            <div class="tab-pane active" id="home" role="tabpanel">
+              <div class="tab-pane p-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label">Supplier*</label>
+                      <div class="col-sm-9">
+                        <ng-select
+                          [items]="SupplierList"
+                          placeholder="Select"
+                          bindLabel="RegName"
+                          bindValue="SupID"
+                          (change)="getItemList()"
+                          [(ngModel)]="model.SupID"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Item name* </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.ItemName"
+                            placeholder="Enter Item Name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Barcode* </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.Barcode"
+                            placeholder="Enter Barcode"
+                            (keyup.enter)="checkBarcode(model.Barcode)"
+                            (click)="checkBarcode(model.Barcode)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Sell UOM </label>
+                      <div class="col-sm-9">
+                        <ng-select
+                          [items]="SellUOMList"
+                          placeholder="Select"
+                          bindLabel="UOMName"
+                          bindValue="UOMId"
+                          [(ngModel)]="model.UOMId"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Conversion Unit </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.BoxSize"
+                            placeholder="Enter Conversion Unit"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Pack Size </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.POPackSize"
+                            placeholder="Enter Pack Size"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> VAT % </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.VATPrcnt"
+                            placeholder="Enter VAT %"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Min Order QTY </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.MinOrder"
+                            placeholder="Enter Minimum Order Quantity"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Min Conv Order Level </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.Reorder"
+                            placeholder="Enter Minimum Conversion Order Level"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-2 control-label"> Break </label>
+                      <div class="col-sm-2">
+                        <div class="input-group">
+                          <div class="checkbox checkbox-primary">
+                            <!-- return 1 and 0 -->
+                            <input id="ChkBreak" type="checkbox" [(ngModel)]="model.DisContinued" />
+                            <label for="ChkBreak">
+                              <span *ngIf="model.DisContinued"> Yes </span>
+
+                              <span *ngIf="!model.DisContinued"> No </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <label class="col-sm-2 control-label"> Auto Sell </label>
+                      <div class="col-sm-2">
+                        <div class="input-group">
+                          <div class="checkbox checkbox-primary">
+                            <!-- return true  and false -->
+                            <input id="ChkAutosell" type="checkbox" [(ngModel)]="model.AutoSale" />
+                            <label for="ChkAutosell">
+                              <span *ngIf="model.AutoSale"> Yes </span>
+                              <span *ngIf="!model.AutoSale"> No </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <label class="col-sm-2 control-label"> Essent Item </label>
+                      <div class="col-sm-2">
+                        <div class="input-group">
+                          <div class="checkbox checkbox-primary">
+                            <!-- return true  and false -->
+                            <input id="ChkESSItem" type="checkbox" [(ngModel)]="model.IsEssentialItem" />
+                            <label for="ChkESSItem">
+                              <span *ngIf="model.IsEssentialItem"> Yes </span>
+                              <span *ngIf="!model.IsEssentialItem"> No </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-2 control-label"> isTrail Item? </label>
+                      <div class="col-sm-2">
+                        <div class="input-group">
+                          <div class="checkbox checkbox-primary">
+                            <!-- return 1 and 0 -->
+                            <input id="istrail" type="checkbox" [(ngModel)]="model.isTrail" />
+                            <label for="istrail">
+                              <span *ngIf="model.isTrail"> Yes </span>
+
+                              <span *ngIf="!model.isTrail"> No </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <label *ngIf="model.isTrail" class="col-md-3 control-label">From Date</label>
+                      <div *ngIf="model.isTrail" class="col-md-5">
+                        <div class="input-group">
+                          <input type="date" class="form-control" [(ngModel)]="model.trailFrom" />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Item Weight </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.ItemWeight"
+                            placeholder="Enter Item Weight"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Conversion Item </label>
+                      <div class="col-sm-3">
+                        <div class="input-group">
+                          <div class="checkbox checkbox-primary">
+                            <!-- return true  and false -->
+                            <input id="ChkRegOwner" type="checkbox" [(ngModel)]="model.IsConverationItem" />
+                            <label for="ChkRegOwner">
+                              <span *ngIf="model.IsConverationItem"> Yes </span>
+                              <span *ngIf="!model.IsConverationItem"> No </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+                  <div class="col-md-6">
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label">Product*</label>
+                      <div class="col-sm-9">
+                        <ng-select
+                          [items]="ProductList"
+                          placeholder="Select"
+                          bindLabel="PrdName"
+                          bindValue="PrdID"
+                          (change)="getItemList()"
+                          [(ngModel)]="model.PrdID"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Product Name Bangla* </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.ItemNameBangla"
+                            placeholder="Enter Product Name Bangla"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> sBarcode* </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.sBarcode"
+                            placeholder="Enter sBarcode"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Fair Price* </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.RPU"
+                            placeholder="Enter Fair Price"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Conversion UOM* </label>
+                      <div class="col-sm-9">
+                        <ng-select
+                          [items]="ConvUOMList"
+                          bindLabel="UOMName"
+                          placeholder="Select"
+                          bindValue="UOMId"
+                          [(ngModel)]="model.BoxUOMId"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Pack UOM* </label>
+                      <div class="col-sm-9">
+                        <ng-select
+                          [items]="PackUOMList"
+                          placeholder="Select"
+                          bindLabel="UOMName"
+                          bindValue="UOMId"
+                          [(ngModel)]="model.PackUOMId"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Discount % </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.DiscPrcnt"
+                            placeholder="Enter Discount %"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Max Order QTY </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.MaxOrder"
+                            placeholder="Enter Max Order QTY"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> Expire Limit date </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.ExpireLimit"
+                            placeholder="Enter Expire Limit date"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label"> A.Expire Limit date </label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="model.ArrivalExpireLimit"
+                            placeholder="Enter Arrival Expire Limit"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row" *ngIf="model.isTrail">
+                      <label class="col-md-3 control-label">To Date</label>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input id="ChkBreak" type="date" class="form-control" [(ngModel)]="model.trailTo" />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Begin Form Group -->
+                    <div class="form-group row" *ngIf="model.IsConverationItem">
+                      <label class="col-sm-3 control-label">Convert Item</label>
+                      <div class="col-sm-7">
+                        <ng-select
+                          [items]="ItemList"
+                          placeholder="Select Convert Item"
+                          bindLabel="ItemName"
+                          bindValue="sBarcode"
+                          [(ngModel)]="model.tempsBarcode"
+                        >
+                        </ng-select>
+                      </div>
+                      <div class="col-sm-2">
+                        <button type="submit" class="btn btn-success" (click)="addItemConvertList(model.tempsBarcode)">
+                          <i class="fa fa-check"></i>
+                        </button>
+                      </div>
+                      <!-- </div> -->
+                      <!-- End Form Group -->
+                      <!-- Begin Grid -->
+                      <div class="table-responsive m-t-40">
+                        <div id="myTable_wrapper">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <table
+                                id="myTable"
+                                class="table table-bordered table-striped dataTable no-footer"
+                                role="grid"
+                              >
+                                <thead>
+                                  <tr>
+                                    <th>Barcode</th>
+                                    <th>Item Name</th>
+                                    <th>Box Size</th>
+                                    <th>Box UOM</th>
+                                    <th>Operation</th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngIf="ItemConvert?.length !== 0">
+                                  <tr *ngFor="let d of ItemConvert">
+                                    <td>{{ d.Barcode }}</td>
+                                    <td>{{ d.ItemName }}</td>
+                                    <td>{{ d.BoxSize }}</td>
+                                    <td>{{ d.BOXUOMName }}</td>
+                                    <td>
+                                      <button
+                                        class="btn btn-pill btn-danger"
+                                        type="button"
+                                        (click)="deleteItemConvertList(d)"
+                                      >
+                                        <i class="fa fa-trash"></i>
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                <tbody *ngIf="ItemConvert?.length === 0">
+                                  <tr>
+                                    <td colspan="3" class="no-data-available">No data!</td>
+                                  </tr>
+                                </tbody>
+
+                                <tbody></tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Grid -->
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+                </div>
+                <!-- ENd Row -->
+              </div>
+            </div>
+          </div>
+          <!-- End Form Group -->
+
+          <!-- Begin Button -->
+          <hr />
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="offset-sm-3 col-md-9">
+                    <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                      <i class="fa fa-check"></i>
+                      {{ buttonText }}
+                    </button>
+                    <button type="submit" class="btn btn-danger" (click)="deleteButtonClick()">
+                      <i class="fas fa-recycle"></i>
+                      Delete
+                    </button>
+                    <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                      <i class="fas fa-undo"> </i>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+
+          <!-- End Button -->
+        </ng-template>
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

@@ -1,0 +1,114 @@
+<button class="btn btn-danger mb-1" id="btnLoadItemlist" style="visibility: collapse" (click)="open(contentItems)">
+  Open Product
+</button>
+
+<ng-template #contentItems let-c="close" let-d="dismiss">
+  <div class="modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Selection/Add</h4>
+        <button class="close" type="button" data-dismiss="modal" (click)="close(contentItems)" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body" style="overflow-x: scroll">
+        <div class="table-responsive m-t-40">
+          <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+            <div class="row">
+              <div class="col-sm-12">
+                <table
+                  id="myTable"
+                  class="table table-bordered table-striped dataTable no-footer"
+                  role="grid"
+                  aria-describedby="myTable_info"
+                  datatable
+                  [dtOptions]="dtOptionsProduct"
+                >
+                  <thead>
+                    <tr>
+                      <th>Barcode</th>
+                      <th>Item Name &emsp;&emsp;&emsp;&emsp;</th>
+                      <th>RPU</th>
+                      <th>Pack Size</th>
+                      <th>UOM</th>
+                      <th>Quantity</th>
+                      <th>BOXUOM</th>
+                      <th>Operation</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dataList?.length !== 0">
+                    <tr *ngFor="let d of dataList">
+                      <td>{{ d.Barcode }}</td>
+                      <td>{{ d.ItemName }}</td>
+                      <td>{{ d.RPU }}</td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          (change)="CalculatePackSize(d)"
+                          [(ngModel)]="d.POPackSizeQTY"
+                        />
+                      </td>
+                      <td>{{ d.PackUiomName }}</td>
+                      <td><input disabled type="text" class="form-control" [(ngModel)]="d.QTY" /></td>
+                      <td>{{ d.BOXUOMName }}</td>
+                      <td>
+                        <!-- return 1 and 0 -->
+                        <input
+                          id="chk"
+                          type="checkbox"
+                          [(ngModel)]="d.ischeck"
+                          [disabled]="d.POPackSizeQTY === undefined"
+                          (ngModelChange)="testSelected(d)"
+                        />
+                        <label for="chk">
+                          <span *ngIf="d.ischeck"> selected </span>
+
+                          <span *ngIf="!d.ischeck"> Not selected </span>
+                        </label>
+                        <!-- <input type="checkbox"
+                                                    (click)='testSelected(d)' -->
+
+                        <!--(click)='ItemsSelected(d.Barcode)'-->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="dataList?.length === 0">
+                    <tr>
+                      <td colspan="3" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Begin Button -->
+
+      <div class="form-actions">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="offset-sm-6 col-md-6">
+                <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                  <i class="fa fa-plus"></i>
+                  ADD
+                </button>
+                <button type="button" class="btn btn-inverse" (click)="close(contentItems)">
+                  <i class="fas fa-times"> </i>
+                  Close
+                </button>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+
+      <!-- End Button -->
+    </div>
+  </div>
+</ng-template>

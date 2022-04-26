@@ -1,0 +1,129 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Circular Price Change Approve</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Circular Price Change Approve</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-sm-6 control-label"> Pending Price Change No: </label>
+                    <div class="col-sm-6">
+                      <ng-select
+                        [items]="Cpcddl"
+                        placeholder="Select"
+                        bindLabel="CPCNo"
+                        autofocus
+                        bindValue="CPCNo"
+                        [(ngModel)]="CPCNo"
+                        (change)="GetCircularDetails(CPCNo)"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table
+                      id="myTable"
+                      class="table table-bordered table-striped dataTable no-footer"
+                      role="grid"
+                      aria-describedby="myTable_info"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Barcode</th>
+                          <th>Description</th>
+                          <th>Sell Price</th>
+                          <th>Changed Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let d of itemList">
+                          <td>{{ d.Barcode }}</td>
+                          <td>{{ d.Description }}</td>
+                          <td>{{ d.RPU }}</td>
+                          <td>{{ d.CngRPU }}</td>
+                        </tr>
+                      </tbody>
+                      <tbody *ngIf="itemList?.length === 0">
+                        <tr>
+                          <td colspan="12" class="no-data-available">No data!</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row" *ngIf="itemList?.length !== 0">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="col-md-3 control-label">
+                          Total Item:&ensp;&ensp;&ensp;<strong>{{ totalItem }} &ensp;</strong>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Begin Button -->
+          <hr />
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-10">
+                <div class="row">
+                  <div class="offset-sm-6 col-md-4">
+                    <button
+                      [disabled]="itemList.length === 0"
+                      type="button"
+                      class="btn btn-success"
+                      (click)="saveButtonClick()"
+                    >
+                      <i class="fa fa-check"></i>
+                      Save
+                    </button>
+
+                    <button type="button" class="btn btn-inverse" (click)="backButtonClick()">
+                      <i class="fa fa-undo"></i>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--   end card body -->
+      </div>
+    </div>
+    <!-- Column -->
+  </div>
+  <!-- Row -->
+</div>

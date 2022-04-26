@@ -1,0 +1,207 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Sales Report</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Sales Report</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="row">
+            <div class="col-md-12">
+              <br />
+              <h3 class="pl-3">Sales Report</h3>
+              <hr />
+            </div>
+            <div class="col-md-6">
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                  <input type="radio" id="radio1" name="item" (change)="IsSummary('rbShopWiseItemSales')" />
+                  <label for="radio1">Shop Wise Item Sales</label>
+                  <br />
+                  <input type="radio" id="radio2" name="item" (change)="IsSummary('rbItemWise')" />
+                  <label for="radio2">Item Wise Sales</label>
+                  <br />
+                  <input type="radio" id="radio3" name="item" (change)="IsSummary('rbSalesStockReport')" />
+                  <label for="radio3">Sales Stock Report</label>
+                  <div class="col-md-9" style="display: inline-block" *ngIf="salesStockOnOff === true">
+                    <input type="text" *ngIf="all === false"  value="0" [(ngModel)]="txtSStockReport"/>
+                    <input id="all" type="checkbox" checked [(ngModel)]="all" />
+                    <label for="all">ALL</label>
+                    <input id="rpu" type="checkbox" checked [(ngModel)]="rpu" />
+                    <label for="rpu">RPU</label>
+                  </div>
+                  <br />
+                  <input type="radio" id="radio4" name="item" (change)="IsSummary('rbSalesFromStockPer')" />
+                  <label for="radio4">Sales From Stock % (Buy)</label>
+                  <br />
+                  <input type="radio" id="radio5" name="item" (change)="IsSummary('rbSupplierWiseGP')" />
+                  <label for="radio5">Supplier GP(%)</label>
+                  <br />
+                  <input type="radio" id="radio6" name="item" (change)="IsSummary('rbSupplierWiseSalesPercent')" />
+                  <label for="radio6">Supplier Sales(%)</label>
+                  <br />
+                  <input type="radio" id="radio7" name="item" (change)="IsSummary('rbInvoiceWiseSalesSummary')" />
+                  <label for="radio7">Invoice Sales Summary</label>
+                  <br />
+                  <input type="radio" id="radio8" name="item" (change)="IsSummary('rbInvoiceWiseSalesDetails')" />
+                  <label for="radio8">Invoice Sales Details</label>
+                  <br />
+                  <input type="radio" id="radio9" name="item" (change)="IsSummary('rbGroupWiseSalesReport')" />
+                  <label for="radio9">Group Sales Report</label>
+                  <br />
+                  <input type="radio" id="radio10" name="item" (change)="IsSummary('rbCashierWiseSalesSummary')" />
+                  <label for="radio10">Cashier Sales Summary (No Filter)</label>
+                  <br />
+                  <input type="radio" id="radio11" name="item" (change)="IsSummary('rbBasketReport')" />
+                  <label for="radio11">Basket Report</label>
+                  <br />
+                  <input type="radio" id="radio12" name="item" (change)="IsSummary('rbEmpWiseExcel')" />
+                  <label style="display: inline-block" for="radio12">Employee Wise Sales(CSV)</label>
+                  <div class="col-md-6" *ngIf="EmpTypeOnOFF === true" style="display: inline-block">
+                    <ng-select
+                      [items]="EmpTypeList"
+                      bindLabel="name"
+                      placeholder="ALL"
+                      bindValue="value"
+                      [(ngModel)]="EmpType"
+                    >
+                    </ng-select>
+                  </div>
+
+                  <br />
+                  <input type="radio" id="radio13" name="item" (change)="IsSummary('rbSlowMovingItems')" />
+                  <label for="radio13">Slow Moving Items (No Date)</label>
+                  <br />
+                  <input type="radio" id="radio14" name="item" (change)="IsSummary('rbSalesExpenseReport')" />
+                  <label for="radio14">Sales Expense Report (Only Date)</label>
+                </div>
+              </div>
+              <!-- End Form Group -->
+            </div>
+            <div class="col-md-5">
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">From Date</label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <input type="date" class="form-control" [(ngModel)]="fromDate" />
+                  </div>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">To Date</label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <input type="date" class="form-control" [(ngModel)]="toDate" />
+                  </div>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">Supplier</label>
+                <div class="col-md-9">
+                  <ng-select
+                    [items]="supList"
+                    bindLabel="Supname"
+                    placeholder="ALL"
+                    bindValue="SupID"
+                    [(ngModel)]="supID"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">Product</label>
+                <div class="col-md-9">
+                  <ng-select
+                    [items]="prdList"
+                    bindLabel="PrdName"
+                    bindValue="PrdID"
+                    (change)="prdChange()"
+                    placeholder="ALL"
+                    [(ngModel)]="prdID"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">Item</label>
+                <div class="col-md-9">
+                  <ng-select
+                    [items]="itmList"
+                    bindLabel="ItemName"
+                    bindValue="sBarcode"
+                    placeholder="ALL"
+                    [(ngModel)]="itmID"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label">Transfer from</label>
+                <div class="col-md-9">
+                  <ng-select
+                    [items]="stockList"
+                    bindLabel="name"
+                    bindValue="value"
+                    placeholder="ALL"
+                    [(ngModel)]="stockType"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <!-- Begin Form Group -->
+              <div class="form-group row" *ngIf="EmpIDOnOFF === true">
+                <label class="col-md-3 control-label">Employee ID</label>
+                <div class="col-md-9">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="EmpID" />
+                  </div>
+                </div>
+              </div>
+              <!-- End Form Group -->
+              <div class="row">
+                <div class="offset-sm-6">
+                  <button type="submit" class="btn btn-success" (click)="reportButtonClick()">
+                    <i class="fa fa-file"></i>
+                    Report
+                  </button>
+                  <button type="button" class="btn btn-inverse" (click)="calcelButtonClick()">
+                    <i class="fas fa-undo"> </i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--   end card body -->
+</div>
+<!-- Row -->

@@ -1,0 +1,512 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Shop Setting</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Shop Setting</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <h2 class="col-md-3 control-label">Shop Setting</h2>
+                    <h3 class="col-md-2 control-label">Shop Name :</h3>
+                    <div class="col-md-3">
+                      <ng-select
+                        [items]="shopList"
+                        placeholder="Select"
+                        bindLabel="ShopName"
+                        bindValue="ShopID"
+                        [(ngModel)]="ShopID"
+                        (change)="changeShop(ShopID)"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <hr />
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Shop Name</label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.StoreId" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Cost Code</label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.ExpenseCode" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Max Discount%</label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.discount" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Exponent point</label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.DecimalLengeth" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Bank Code</label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.BankCode" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Pause Sales(Worker)</label>
+                    <div class="col-md-2">
+                      <div class="input-group form-control">
+                        <input id="psw" type="checkbox" [(ngModel)]="softwareSetting.IS_BLOCK_WORKER" />
+                      </div>
+                    </div>
+                    <label class="col-md-2 control-label">From Date</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="softwareSetting.BW_FROMDATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">To Date</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input id="ChkBreak" type="date" class="form-control" [(ngModel)]="softwareSetting.BW_TODATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Pause Non-Management Staff</label>
+                    <div class="col-md-2">
+                      <div class="input-group form-control">
+                        <input id="pnms" type="checkbox" [(ngModel)]="softwareSetting.IS_BLOCK_NONMGMSTAFF" />
+                      </div>
+                    </div>
+                    <label class="col-md-2 control-label">From Date</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="softwareSetting.NMS_FROMDATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">To Date</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          id="ChkBreak"
+                          type="date"
+                          class="form-control"
+                          [(ngModel)]="softwareSetting.NMS_TODATE"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Requisition Date Limit</label>
+                    <div class="col-md-2">
+                      <div class="input-group form-control">
+                        <input type="checkbox" [(ngModel)]="softwareSetting.IS_REQ_ENABLE" />
+                      </div>
+                    </div>
+                    <label class="col-md-2 control-label">From Date</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="softwareSetting.REQ_FROMDATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">To Date</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="softwareSetting.REQ_TODATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-6">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Arrival Date Limit</label>
+                    <div class="col-md-2">
+                      <div class="input-group form-control">
+                        <input type="checkbox" [(ngModel)]="softwareSetting.IS_ARR_ENABLE" />
+                      </div>
+                    </div>
+                    <label class="col-md-2 control-label">From Date</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="softwareSetting.ARR_FROMDATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">To Date</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="date" class="form-control" [(ngModel)]="softwareSetting.ARR_TODATE" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-3">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-6 control-label">Discount After VAT</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="vad" type="checkbox" [(ngModel)]="softwareSetting.IsVatAfterDiscount" />
+                          <label for="vad">
+                            <span *ngIf="softwareSetting.IsVatAfterDiscount"> YES </span>
+                            <span *ngIf="!softwareSetting.IsVatAfterDiscount"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-3">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-6 control-label">Details Memo</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="li" type="checkbox" [(ngModel)]="softwareSetting.IsLargeInvoice" />
+                          <label for="li">
+                            <span *ngIf="softwareSetting.IsLargeInvoice"> YES </span>
+                            <span *ngIf="!softwareSetting.IsLargeInvoice"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-3">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-6 control-label">Sales Email</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="se" type="checkbox" [(ngModel)]="softwareSetting.SalesInvoice_Email" />
+                          <label for="se">
+                            <span *ngIf="softwareSetting.SalesInvoice_Email"> YES </span>
+                            <span *ngIf="!softwareSetting.SalesInvoice_Email"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-3">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-6 control-label">Attendance</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="ar" type="checkbox" [(ngModel)]="softwareSetting.AttandanceRequired" />
+                          <label for="ar">
+                            <span *ngIf="softwareSetting.AttandanceRequired"> YES </span>
+                            <span *ngIf="!softwareSetting.AttandanceRequired"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">TopUp Email</label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="te" type="checkbox" [(ngModel)]="softwareSetting.Topup_email" />
+                          <label for="te">
+                            <span *ngIf="softwareSetting.Topup_email"> YES </span>
+                            <span *ngIf="!softwareSetting.Topup_email"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Minimum</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.MinTopup" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Maximum</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.MaxTopup" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">P/O Email</label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="pe" type="checkbox" [(ngModel)]="softwareSetting.PO_Email" />
+                          <label for="pe">
+                            <span *ngIf="softwareSetting.PO_Email"> YES </span>
+                            <span *ngIf="!softwareSetting.PO_Email"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">SMTP Addres</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.smtpAddress" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">SMTP Port</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.smtpPort" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h3></h3>
+                  <hr />
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-4 control-label">Enable SSL</label>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                        <div class="checkbox checkbox-primary">
+                          <!-- return 1 and 0 -->
+                          <input id="ssl" type="checkbox" [(ngModel)]="softwareSetting.EnableSsl" />
+                          <label for="ssl">
+                            <span *ngIf="softwareSetting.EnableSsl"> YES </span>
+                            <span *ngIf="!softwareSetting.EnableSsl"> NO </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Sender Email</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.SenderEmail" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Sender Pass</label>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="softwareSetting.SenderPass" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Begin Button -->
+
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-10">
+                <div class="row">
+                  <div class="offset-sm-6 col-md-6">
+                    <button type="submit" class="btn btn-success" (click)="saveButtonClick()">
+                      <i class="fa fa-check"></i>
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-inverse" routerLink="/Home">
+                      <i class="fas fa-undo"> </i>
+                      Back
+                    </button>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+
+          <!-- End Button -->
+        </div>
+        <!--   end card body -->
+      </div>
+    </div>
+    <!-- Column -->
+  </div>
+  <!-- Row -->
+</div>

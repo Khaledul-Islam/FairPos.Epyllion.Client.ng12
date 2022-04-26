@@ -1,0 +1,195 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Monthly Budget</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Monthly Budget</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col custom-select-dash">
+                    <span>Month Wise Budget : Year -</span>
+                    <ng-select
+                      [items]="yearList"
+                      placeholder="Select"
+                      bindLabel="Year"
+                      bindValue="Year"
+                      [(ngModel)]="cyear"
+                      (change)="AssignYear(cyear)"
+                    >
+                    </ng-select>
+                  </div>
+                  <!-- <div class="col custom-select-dash">
+                      <span>Shop Name: -</span>
+                      <ng-select
+                        [items]="shopList"
+                        placeholder="Select"
+                        bindLabel="ShopName"
+                        bindValue="ShopID"
+                        [(ngModel)]="ShopID"
+                        (change)="AssignShop(ShopID)"
+                      >
+                      </ng-select>
+                    </div> -->
+                </div>
+                <hr />
+              </div>
+              <div class="row" *ngFor="let d of budgetList">
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 custom-sels-btn">
+                  <div class="btn">
+                    <button class="btn btn-success">{{ d.ShopName }}</button>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">January</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.January, 1)"
+                        [(ngModel)]="d.January"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">February</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.February, 2)"
+                        [(ngModel)]="d.February"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">March</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.March, 3)"
+                        [(ngModel)]="d.March"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">April</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.April, 4)"
+                        [(ngModel)]="d.April"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">May</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.May, 5)"
+                        [(ngModel)]="d.May"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">June</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.June, 6)"
+                        [(ngModel)]="d.June"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">July</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.July, 7)"
+                        [(ngModel)]="d.July"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">August</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.August, 8)"
+                        [(ngModel)]="d.August"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">September</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.September, 9)"
+                        [(ngModel)]="d.September"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">October</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.October, 10)"
+                        [(ngModel)]="d.October"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">November</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.November, 11)"
+                        [(ngModel)]="d.November"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <label for="" bindLabel="Name">December</label>
+                      <input
+                        (keyup.enter)="SaveMonthlyBudget(d, d.December, 12)"
+                        [(ngModel)]="d.December"
+                        type="text"
+                        class="form-control"
+                        placeholder="Budget Money"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--   end card body -->
+      </div>
+    </div>
+
+    <!-- Column -->
+  </div>
+  <!-- Row -->
+</div>

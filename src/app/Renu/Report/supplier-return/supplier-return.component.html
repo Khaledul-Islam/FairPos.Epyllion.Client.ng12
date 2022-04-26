@@ -1,0 +1,148 @@
+<div class="row page-titles">
+    <div class="col-md-6 col-8 align-self-center">
+      <h3 class="text-themecolor mb-0 mt-0">Supplier Return Report</h3>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+        <li class="breadcrumb-item active">Supplier Return</li>
+      </ol>
+    </div>
+  </div>
+  
+  <!-- Row -->
+  <div class="row">
+    <!-- Column -->
+    <div class="col-12">
+      <div class="card card-outline-info">
+        <div class="card-header">
+          <h4 class="mb-0 text-white"></h4>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="row">
+              <div class="col-md-12">
+                <br />
+                <h3 class="pl-3">Supplier Return Report</h3>
+                <hr />
+              </div>
+              <div class="col-md-5">
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-4">
+                    <input type="radio" id="radio1" name="item" [checked]="summary === true" (change)="IsSummary(true)" />
+                    <label for="radio1">Summary</label>
+                    <br>
+                    <input type="radio" id="radio2" name="item" [checked]="summary === false" (change)="IsSummary(false)" />
+                    <label for="radio2">Details</label>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+              </div>
+              <div class="col-md-5">
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">From Date</label>
+                  <div class="col-md-9">
+                    <div class="input-group">
+                      <input type="date" class="form-control" [(ngModel)]="fromDate" />
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">To Date</label>
+                  <div class="col-md-9">
+                    <div class="input-group">
+                      <input type="date" class="form-control" [(ngModel)]="toDate" />
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Supplier</label>
+                  <div class="col-md-9">
+                    <ng-select
+                      [items]="supList"
+                      placeholder="Select"
+                      bindLabel="Supname"
+                      placeholder="ALL"
+                      bindValue="SupID"
+                      [(ngModel)]="supID"
+                    >
+                    </ng-select>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Product</label>
+                  <div class="col-md-9">
+                    <ng-select
+                      [items]="prdList"
+                      placeholder="Select"
+                      bindLabel="PrdName"
+                      bindValue="PrdID"
+                      (change)="prdChange()"
+                      placeholder="ALL"
+                      [(ngModel)]="prdID"
+                    >
+                    </ng-select>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Item</label>
+                  <div class="col-md-9">
+                    <ng-select
+                      [items]="itmList"
+                      placeholder="Select"
+                      bindLabel="ItemName"
+                      bindValue="sBarcode"
+                      placeholder="ALL"
+                      [(ngModel)]="itmID"
+                    >
+                    </ng-select>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Stock Type</label>
+                  <div class="col-md-9">
+                    <ng-select
+                      [items]="stockList"
+                      placeholder="Select"
+                      bindLabel="name"
+                      bindValue="value"
+                      placeholder="ALL"
+                      [(ngModel)]="stockType"
+                    >
+                    </ng-select>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <div class="row">
+                  <div class="offset-sm-6 col-md-6">
+                    <button type="submit" class="btn btn-success" (click)="reportButtonClick()">
+                      <i class="fa fa-file"></i>
+                      Report
+                    </button>
+                    <button type="button" class="btn btn-inverse" (click)="calcelButtonClick()">
+                      <i class="fas fa-undo"> </i>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--   end card body -->
+  </div>
+  <!-- Row -->
+  

@@ -1,0 +1,150 @@
+<!-- <div class="container-fluid">
+  <div class="jumbotron text-center">
+    <h1>
+      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo" />
+      <span translate>Hello world !</span>
+    </h1>
+    <app-loader [isLoading]="isLoading"></app-loader>
+    <q [hidden]="isLoading">{{ quote }}</q>
+  </div>
+</div> -->
+
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">User Permissions</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">User Permissions</li>
+    </ol>
+  </div>
+
+  <!-- <div class="col-md-6 col-4 align-self-center">
+      <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i
+          class="ti-settings text-white"></i></button>
+      <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>
+        Create</button>
+      <div class="dropdown float-right mr-2 hidden-sm-down">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> January 2019 </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February
+            2019</a> <a class="dropdown-item" href="#">March 2019</a> <a class="dropdown-item" href="#">April 2019</a>
+        </div>
+      </div>
+    </div> -->
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div class="col-md-7">
+          <!-- Begin Form Group -->
+          <br />
+          <div class="form-group row">
+            <label class="col-sm-3 control-label">Username*</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <ng-select
+                  [items]="userList"
+                  bindLabel="username"
+                  autofocus
+                  bindValue="username"
+                  [searchable]="true"
+                  [clearable]="false"
+                  (change)="UserChanged($event)"
+                  placeholder="Select"
+                  [(ngModel)]="UserName"
+                  style="min-width: 200px"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <!-- End Form Group -->
+
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <ul class="icheck-list form-group">
+                <li *ngIf="ChildmenuList == null; else elseSectionMenu">
+                  <!-- ... -->
+                </li>
+                <ng-template #elseSectionMenu>
+                  <li *ngFor="let item of ParentmenuList; let i = index">
+                    <div class="checkbox checkbox-primary">
+                      <input
+                        type="checkbox"
+                        id="cb{{ item.ID }}"
+                        [(ngModel)]="item.Checked"
+                        [disabled]="item.isShowable !== true"
+                      />
+                      <label for="cb{{ item.ID }}">{{ item.Text }}</label>
+                    </div>
+
+                    <ul *ngIf="(ChildmenuList | grdFilter: { ParentID: item.ID }).length > 0">
+                      <li *ngFor="let child of ChildmenuList | grdFilter: { ParentID: item.ID }; let j = index">
+                        <div class="checkbox checkbox-success">
+                          <input
+                            type="checkbox"
+                            id="cb{{ child.ID }}"
+                            [disabled]="item.isShowable !== true"
+                            [(ngModel)]="child.Checked"
+                          />
+                          <label for="cb{{ child.ID }}">{{ child.Text }}</label>
+                        </div>
+
+                        <ul *ngIf="(ChildmenuList | grdFilter: { ParentID: child.ID }).length > 0">
+                          <li *ngFor="let child2 of ChildmenuList | grdFilter: { ParentID: child.ID }; let jj = index">
+                            <div class="checkbox checkbox-success">
+                              <input
+                                type="checkbox"
+                                id="cb{{ child2.ID }}"
+                                [disabled]="item.isShowable !== true"
+                                [(ngModel)]="child2.Checked"
+                              />
+                              <label for="cb{{ child2.ID }}">{{ child2.Text }}</label>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ng-template>
+              </ul>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+
+          <hr />
+          <div class="row">
+            <div class="col-lg-8">
+              <button class="btn btn-pill btn-danger" type="button" (click)="backbuttonClick()">
+                <i class="fa fa-adjust fa-sm mt-1"></i>&nbsp;Select/UnSelect
+              </button>
+
+              <button class="btn btn-pill btn-success" type="button" (click)="savebuttonClick()">
+                <i class="fa fa-save fa-sm mt-1"></i>&nbsp;Save
+              </button>
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

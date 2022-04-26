@@ -1,0 +1,368 @@
+<!-- <div class="container-fluid">
+  <div class="jumbotron text-center">
+    <h1>
+      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo" />
+      <span translate>Hello world !</span>
+    </h1>
+    <app-loader [isLoading]="isLoading"></app-loader>
+    <q [hidden]="isLoading">{{ quote }}</q>
+  </div>
+</div> -->
+
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+  </div>
+  <!-- <div class="col-md-6 col-4 align-self-center">
+    <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i
+        class="ti-settings text-white"></i></button>
+    <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>
+      Create</button>
+    <div class="dropdown float-right mr-2 hidden-sm-down">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false"> January 2019 </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February
+          2019</a> <a class="dropdown-item" href="#">March 2019</a> <a class="dropdown-item" href="#">April 2019</a>
+      </div>
+    </div>
+  </div> -->
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
+<div class="row">
+  <div class="col-lg-6">
+    <!-- Row -->
+    <div class="row">
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalProduct}}</h1>
+              <h6 class="text-muted">Total Product</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="20%" class="css-bar mb-0 css-bar-primary css-bar-20">
+                <i class="mdi mdi-shopping"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalSupplier}}</h1>
+              <h6 class="text-muted">All Supplier</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="30%" class="css-bar mb-0 css-bar-danger css-bar-20">
+                <i class="mdi mdi-truck"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalItem}}</h1>
+              <h6 class="text-muted">All Items</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="40%" class="css-bar mb-0 css-bar-warning css-bar-40">
+                <i class="mdi mdi-star-circle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalEmployee}}</h1>
+              <h6 class="text-muted">Total Employee</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="60%" class="css-bar mb-0 css-bar-info css-bar-60">
+                <i class="mdi mdi-account-circle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <!-- Row -->
+    <div class="row">
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalShop}}</h1>
+              <h6 class="text-muted">Total Shop</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="20%" class="css-bar mb-0 css-bar-primary css-bar-20">
+                <i class="mdi mdi-store"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.PendingProduct}}</h1>
+              <h6 class="text-muted">Pending Item</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="30%" class="css-bar mb-0 css-bar-danger css-bar-20">
+                <i class="mdi mdi-calendar-clock"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalDamage}}</h1>
+              <h6 class="text-muted">Damaged Items</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="40%" class="css-bar mb-0 css-bar-warning css-bar-40">
+                <i class="mdi mdi-image-broken-variant"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Column -->
+      <div class="col-sm-6">
+        <div class="card card-body">
+          <!-- Row -->
+          <div class="row pt-2 pb-2">
+            <!-- Column -->
+            <div class="col pr-0">
+              <h1 class="font-light">{{dashBoard.TotalReturn}}</h1>
+              <h6 class="text-muted">Return Item</h6>
+            </div>
+            <!-- Column -->
+            <div class="col text-right align-self-center">
+              <div data-label="60%" class="css-bar mb-0 css-bar-info css-bar-60"><i class="mdi mdi-backburger"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Column -->
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <ul class="list-inline float-right">
+          <li>
+            <h6 class="text-muted"><i class="fa fa-circle mr-1 text-success"></i>2016</h6>
+          </li>
+          <li>
+            <h6 class="text-muted"><i class="fa fa-circle mr-1 text-success"></i>2016</h6>
+          </li>
+        </ul>
+        <h4 class="card-title">Total Revenue</h4>
+        <div class="clear"></div>
+        <div class="total-revenue" style="height: 240px"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Column -->
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex no-block">
+          <h4 class="card-title">Sales of the Month</h4>
+          <div class="ml-auto">
+            <select class="custom-select">
+              <option selected>January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+            </select>
+          </div>
+        </div>
+        <!-- Row -->
+        <div class="row mt-4">
+          <div class="col-md-7">
+            <div class="round-overlap"><i class="mdi mdi-cart"></i></div>
+          </div>
+          <div class="col-md-5 align-self-center">
+            <h1 class="mb-0">65<small>%</small></h1>
+            <h6 class="text-muted">160 Sales January</h6>
+            <ul class="list-icons mt-4">
+              <li><i class="fa fa-circle text-purple"></i> Organic Sales</li>
+              <li><i class="fa fa-circle text-success"></i> Search Engine</li>
+              <li><i class="fa fa-circle text-info"></i> Marketing</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Row -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <ul class="list-inline float-right">
+          <li>
+            <h6 class="text-muted"><i class="fa fa-circle mr-1 text-success"></i>Net</h6>
+          </li>
+          <li>
+            <h6 class="text-muted"><i class="fa fa-circle mr-1 text-info"></i>Growth</h6>
+          </li>
+        </ul>
+        <h4 class="card-title">Income of the Year</h4>
+        <div class="income-year" style="height: 327px"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex no-block">
+          <h4 class="card-title">Projects of the Month</h4>
+          <div class="ml-auto">
+            <select class="custom-select">
+              <option selected>January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-responsive mt-4">
+          <table class="table stylish-table no-wrap">
+            <thead>
+              <tr>
+                <th colspan="2">Assigned</th>
+                <th>Name</th>
+                <th>Priority</th>
+                <th>Budget</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="width: 50px"><span class="round">S</span></td>
+                <td>
+                  <h6>Sunil Joshi</h6>
+                  <small class="text-muted">Web Designer</small>
+                </td>
+                <td>Elite Admin</td>
+                <td><span class="label label-light-success">Low</span></td>
+                <td>$3.9K</td>
+              </tr>
+              <tr class="active">
+                <td>
+                  <span class="round"><img src="../assets/images/users/2.jpg" alt="user" width="50" /></span>
+                </td>
+                <td>
+                  <h6>Andrew</h6>
+                  <small class="text-muted">Project Manager</small>
+                </td>
+                <td>Real Homes</td>
+                <td><span class="label label-light-info">Medium</span></td>
+                <td>$23.9K</td>
+              </tr>
+              <tr>
+                <td><span class="round round-success">B</span></td>
+                <td>
+                  <h6>Bhavesh patel</h6>
+                  <small class="text-muted">Developer</small>
+                </td>
+                <td>MedicalPro Theme</td>
+                <td><span class="label label-light-danger">High</span></td>
+                <td>$12.9K</td>
+              </tr>
+              <tr>
+                <td><span class="round round-primary">N</span></td>
+                <td>
+                  <h6>Nirav Joshi</h6>
+                  <small class="text-muted">Frontend Eng</small>
+                </td>
+                <td>Elite Admin</td>
+                <td><span class="label label-light-success">Low</span></td>
+                <td>$10.9K</td>
+              </tr>
+              <tr>
+                <td><span class="round round-warning">M</span></td>
+                <td>
+                  <h6>Micheal Doe</h6>
+                  <small class="text-muted">Content Writer</small>
+                </td>
+                <td>Helping Hands</td>
+                <td><span class="label label-light-danger">High</span></td>
+                <td>$12.9K</td>
+              </tr>
+              <tr>
+                <td><span class="round round-danger">N</span></td>
+                <td>
+                  <h6>Johnathan</h6>
+                  <small class="text-muted">Graphic</small>
+                </td>
+                <td>Digital Agency</td>
+                <td><span class="label label-light-danger">High</span></td>
+                <td>$2.6K</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

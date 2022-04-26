@@ -1,0 +1,97 @@
+<button class="btn btn-danger mb-1" id="btnLoadItemlist" style="visibility: collapse" (click)="open(contentItems)">
+  Open Product
+</button>
+
+<ng-template #contentItems let-c="close" let-d="dismiss">
+  <div class="modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Scan and Verify Item</h4>
+        <button class="close" type="button" data-dismiss="modal" (click)="close(contentItems)" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-12">
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Barcode</label>
+                  <div class="col-md-9">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="itemDetails.BarCode"
+                        (keyup.enter)="GetItemDetails(itemDetails.BarCode)"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Item Name</label>
+                  <div class="col-md-9">
+                    <div class="input-group">
+                      <input type="text" class="form-control" [(ngModel)]="itemDetails.ProductDescription" />
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <!-- Begin Form Group -->
+                <div class="form-group row">
+                  <label class="col-md-3 control-label">Quantity</label>
+                  <div class="col-md-9">
+                    <div class="input-group">
+                      <input type="text" class="form-control" [(ngModel)]="itemDetails.Qty" />
+                    </div>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+                <div class="col-md-12 offset-sm-8">
+                  <button (click)="verifyButtonClick()" type="submit" class="btn btn-secondary">
+                    <i class="fa fa-check"></i>
+                    Verify Item
+                  </button>
+                </div>
+                <div class="col-md-12">
+                  <h1 class="text-dark">Verify Item {{ verifiedItem }} of {{ totalItem }}</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <table
+                  id="myTable"
+                  class="table table-bordered table-striped dataTable no-footer"
+                  role="grid"
+                  aria-describedby="myTable_info"
+                >
+                  <thead>
+                    <tr>
+                      <th>Barcode</th>
+                      <th>Item</th>
+                      <th>QTY</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="verifiedOrderList?.length !== 0">
+                    <tr *ngFor="let d of verifiedOrderList" class="text-center">
+                      <td>{{ d.Barcode }}</td>
+                      <td>{{ d.ItemName }}</td>
+                      <td>{{ d.QTY }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

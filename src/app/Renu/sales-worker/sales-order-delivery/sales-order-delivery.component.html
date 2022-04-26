@@ -1,0 +1,171 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Sales Order Deliivery</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Sales Order Deliivery</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="table-responsive m-t-40">
+            <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>Sales Order Deliivery</h3>
+                  <hr />
+                </div>
+                <div class="col-md-2">
+                  <!-- Begin Form Group -->
+                  <div *ngIf="Employee.EmpImage !== undefined" class="form-group row">
+                    <div class="col-md-9">
+                      <img
+                        alt="..."
+                        class="img-thumbnail"
+                        style="height: 200px; width: 200px"
+                        [src]="'data:image/png;base64,' + Employee.EmpImage"
+                      />
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">RFID Card</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          (keyup.enter)="GetEmployeeDetails()"
+                          [(ngModel)]="Employee.RFCardNo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Name</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="Employee.Name" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row" *ngIf="Employee.Name !== undefined">
+                    <label class="col-md-3 control-label">S/O NO.*</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input (keyup.enter)="SalesOrderClick()" type="text" class="form-control" [(ngModel)]="so_no" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+                <div class="col-md-4">
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Credit Limit</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="Employee.CreditLimit" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                  <!-- Begin Form Group -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label">Available Limit</label>
+                    <div class="col-md-9">
+                      <div class="input-group">
+                        <input disabled type="text" class="form-control" [(ngModel)]="Employee.AvailableLimit" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+                </div>
+              </div>
+              <div class="row" *ngIf="orderDetailsList?.length !== 0">
+                <div class="col-sm-12">
+                  <table
+                    id="myTable"
+                    datatable
+                    [dtOptions]="dtOptions"
+                    class="table table-bordered table-striped dataTable no-footer"
+                    role="grid"
+                    aria-describedby="myTable_info"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Barcode</th>
+                        <th>Item Name</th>
+                        <th>QTY</th>
+                        <th>Price</th>
+                        <th>Total Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="orderDetailsList?.length !== 0">
+                      <tr *ngFor="let d of orderDetailsList">
+                        <td>{{ d.Barcode }}</td>
+                        <td>{{ d.ItemName }}</td>
+                        <td>{{ d.QTY }}</td>
+                        <td>{{ d.RPU }}</td>
+                        <td>{{ d.TOTAL_AMT }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <hr />
+              <div class="row" *ngIf="orderDetailsList?.length !== 0">
+                <div class="col-md-12">
+                  <label class="col-md-7 control-label">
+                    Total Price:&ensp;&ensp;&ensp;<strong>{{ totalPrice }} &ensp; TK</strong>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Begin Button -->
+
+        <div class="form-actions" *ngIf="orderDetailsList?.length !== 0">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="offset-sm-6 col-md-6">
+                  <button (click)="submitButtonClick()" type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i>
+                    Submit
+                  </button>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Button -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->

@@ -1,0 +1,36 @@
+export class AutoRequisition {
+  public CmpIDX: string | undefined;
+  public Chln: string | undefined;
+  public SupID: string | undefined;
+  public sBarCode: string | undefined;
+  public BarCode: string | undefined;
+  public BoxQty: number | undefined;
+  public Qty: number | undefined;
+  public sQty: number | undefined;
+  public DiscPrcnt: number | undefined;
+  public VATPrcnt: number | undefined;
+  public PrdComm: number | undefined;
+  public CPU: number | undefined;
+  public RPU: number | undefined;
+  public BuyDT: Date | undefined;
+  public EXPDT: Date | undefined;
+  public UserID: string | undefined;
+  public PrdDescription: string | undefined;
+  public BoxUOM: string | undefined;
+  public UnitUOM: string | undefined;
+  public PrdID: string | undefined;
+  public POPackQty: number | undefined;
+  public PackUOM: string | undefined;
+  public BalQty: number | undefined;
+  public BoxSize: number | undefined;
+  public MinOrder: number | undefined;
+  public POPackSize: number | undefined;
+  public ActualBoxQty: number | undefined;
+  public ApprovedBoxQty: number | undefined;
+  public ApproveStatus: string | undefined;
+  public ApprovedBy: string | undefined;
+  public ApprovedDate: Date | undefined;
+  public IsPODone: boolean | undefined;
+  public Remarks: string | undefined;
+  public ShopID: string | undefined;
+}

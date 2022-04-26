@@ -1,0 +1,83 @@
+<div class="row page-titles">
+  <div class="col-md-6 col-8 align-self-center">
+    <h3 class="text-themecolor mb-0 mt-0">Item Approve</h3>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+      <li class="breadcrumb-item active">Item Approve</li>
+    </ol>
+  </div>
+
+  <div class="col-md-6 col-4 align-self-center">
+    <div>
+      <button class="btn float-right hidden-sm-down btn-success" (click)="saveButtonClick()">
+        <i class="mdi mdi-plus-circle"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+  <!-- Column -->
+  <div class="col-12">
+    <div class="card card-outline-info">
+      <div class="card-header">
+        <h4 class="mb-0 text-white"></h4>
+      </div>
+      <div class="card-body">
+        <!-- <div *ngIf="isInsertMode === false ; else insertMode2"> -->
+
+        <div class="table-responsive m-t-40">
+          <div id="myTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+            <div class="row">
+              <div class="col-sm-12">
+                <table
+                  id="myTable"
+                  class="table table-bordered table-striped dataTable no-footer"
+                  role="grid"
+                  aria-describedby="myTable_info"
+                  [dtTrigger]="dtTrigger"
+                  datatable
+                  [dtOptions]="dtOptions"
+                >
+                  <thead>
+                    <tr>
+                      <th>sBarcode</th>
+                      <th>Barcode</th>
+                      <th>Supplier Name</th>
+                      <th>Item Name &emsp;&emsp;&emsp;&emsp;</th>
+
+                      <th>Operation</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="dataList?.length !== 0">
+                    <tr *ngFor="let d of dataList">
+                      <td>{{ d.sBarcode }}</td>
+                      <td>{{ d.Barcode }}</td>
+                      <td>{{ d.SupName }}</td>
+                      <td>{{ d.ItemName }}</td>
+
+                      <td><input type="checkbox" [(ngModel)]="d.isAuthorized" /> Authorize</td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="dataList?.length === 0">
+                    <tr>
+                      <td colspan="3" class="no-data-available">No data!</td>
+                    </tr>
+                  </tbody>
+
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- </div> -->
+      </div>
+      <!--   end card body -->
+    </div>
+  </div>
+  <!-- Column -->
+</div>
+<!-- Row -->
